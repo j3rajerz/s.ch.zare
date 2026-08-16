@@ -1,0 +1,18 @@
+name = "check-reminder-zare-push"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Runs every 5 minutes to check for due reminders and send push notifications.
+[triggers]
+crons = ["*/5 * * * *"]
+
+# Create with: npx wrangler kv namespace create CHECK_REMINDERS_KV
+# then paste the id it prints below.
+[[kv_namespaces]]
+binding = "CHECK_REMINDERS_KV"
+id = "9bcedbf0acda48779b6755613b00d1ea"
+
+# Secrets (set with `npx wrangler secret put NAME`, do NOT put real values here):
+#   VAPID_PUBLIC_KEY
+#   VAPID_PRIVATE_KEY
+#   VAPID_SUBJECT   (e.g. mailto:you@example.com)
