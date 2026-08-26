@@ -60,6 +60,19 @@ export default {
         return json({ ok: true }, 200, cors);
       }
 
+      if (url.pathname === '/api/test-email' && request.method === 'POST') {
+        const data = await request.json();
+        if (!data.email) return json({ error: 'missing email' }, 400, cors);
+        if (!env.RESEND_API_KEY) return json({ error: 'email not configured' }, 400, cors);
+        await sendEmail(
+          data.email,
+          '✅ تست اعلان ایمیل - چک یاداور زارع',
+          'این یک ایمیل تستی است. اگر این را دریافت کرده‌اید، یعنی یادآوری چک‌ها حتی وقتی برنامه کاملاً بسته باشد هم به این ایمیل ارسال خواهد شد.',
+          env
+        );
+        return json({ ok: true }, 200, cors);
+      }
+
       if (url.pathname === '/api/health') {
         return json({ ok: true, time: new Date().toISOString() }, 200, cors);
       }
